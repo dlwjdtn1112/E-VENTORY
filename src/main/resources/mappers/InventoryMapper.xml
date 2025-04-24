@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssg.my_wms2.mapper.InventoryMapper">
+
+    <select id="inventory_selectAll_M" resultType="com.ssg.my_wms2.Domain.InventoryVO">
+        SELECT * FROM inventory where = #{userid}
+    </select>
+
+<!--    <select id="inventory_checkExist_M" resultType="int" parameterType="map">-->
+<!--        SELECT COUNT(*) FROM inventory-->
+<!--        WHERE warehouse_id = #{warehouse_id}-->
+<!--        AND product_id = #{product_id}-->
+<!--    </select>-->
+
+    <select id="inventory_checkExist_M" resultType="int">
+        SELECT COUNT(*) FROM inventory
+        WHERE warehouse_id = #{warehouse_id}
+        AND product_id = #{product_id}
+    </select>
+
+    <insert id="inventory_insert_M">
+        INSERT INTO inventory (warehouse_id, product_id, quantity,userid)
+        VALUES (#{warehouse_id}, #{product_id}, #{quantity},#{userid})
+    </insert>
+
+    <update id="inventory_addQuantity_M">
+        UPDATE inventory
+        SET quantity = quantity + #{quantity}
+        WHERE warehouse_id = #{warehouse_id}
+        AND product_id = #{product_id}
+    </update>
+
+    <select id="inventory_selectByUser_M" resultType="com.ssg.my_wms2.Domain.InventoryVO">
+        select * from inventory where userid = #{userid}
+
+    </select>
+
+</mapper>
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssg.my_wms2.mapper.UserMapper">
+
+    <insert id="insertUser" parameterType="com.ssg.my_wms2.dto.UserDTO">
+        INSERT INTO user
+        (userid, password, name, email, phone, company, role, created_at, updated_at)
+        VALUES
+            (#{userid}, #{password}, #{name}, #{email}, #{phone}, #{company}, #{role}, NOW(), NOW())
+    </insert>
+
+    <select id="login_M" parameterType="com.ssg.my_wms2.dto.UserDTO" resultType="com.ssg.my_wms2.dto.UserDTO">
+        SELECT * FROM user
+        WHERE userid = #{userid} AND password = #{password}
+    </select>
+
+</mapper>
+
+
+

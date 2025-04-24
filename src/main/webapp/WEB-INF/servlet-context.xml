@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/mvc
+           https://www.springframework.org/schema/mvc/spring-mvc.xsd
+           http://www.springframework.org/schema/context
+           https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- HandlerMapping, HandlerAdapter 자동 등록 -->
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
+    <!-- 정적 리소스 매핑 -->
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
+    <!-- View Resolver 설정 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 컨트롤러 스캔 -->
+    <context:component-scan base-package="com.ssg.my_wms2.Controller"/>
+
+    <!-- 커스텀 Formatter 등록 -->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <set>
+                <bean class="com.ssg.my_wms2.formatters.CheckboxFormatter"/>
+                <!-- LocalDateFormatter도 있다면 아래처럼 추가 -->
+                <!-- <bean class="com.ssg.my_wms2.formatters.LocalDateFormatter"/> -->
+            </set>
+        </property>
+    </bean>
+
+</beans>
