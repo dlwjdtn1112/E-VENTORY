@@ -48,17 +48,41 @@ public class UserController {
         if (loginUser != null) {
             session.setAttribute("user", loginUser);
             session.setAttribute("login_id", loginUser.getUserid());
-            return "redirect:/todo/main";
+            session.setAttribute("name", loginUser.getName());
+            session.setAttribute("email", loginUser.getEmail());
+            session.setAttribute("phone", loginUser.getPhone());
+            session.setAttribute("company", loginUser.getCompany());
+            session.setAttribute("role", loginUser.getRole());
+
+
+            String role = loginUser.getRole();
+            if ("관리자".equalsIgnoreCase(role)) {
+                return "redirect:/todo/main_admin";
+            } else {
+                return "redirect:/todo/main_user";
+            }
         } else {
             model.addAttribute("error", "아이디 또는 비밀번호가 잘못되었습니다.");
-            return "redirect:/index.jsp"; // 로그인 실패 시 다시 로그인 폼으로
+            log.info("비번 틀림");
+            return "redirect:/index.jsp";
         }
     }
 
     // 로그인 성공 후 이동하는 메인 페이지
-    @GetMapping("/main")
+    @GetMapping("/main_admin")
     public String showMainPage() {
-        return "todo/main"; // -> /WEB-INF/views/todo/main.jsp
+        return "todo/main_admin"; // -> /WEB-INF/views/todo/main.jsp
+    }
+
+    @GetMapping("/main_user")
+    public String showMainPage2() {
+        return "todo/main_user"; // -> /WEB-INF/views/todo/main.jsp
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // 세션 끊기
+        return "redirect:/index.jsp"; // 로그인 페이지로 이동
     }
 
 

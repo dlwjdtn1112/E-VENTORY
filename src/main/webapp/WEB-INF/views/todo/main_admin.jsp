@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <title>WMS 대시보드</title>
+    <title>WMS 대시보드 - 관리자</title>
     <style>
         body {
             margin: 0;
@@ -12,14 +12,7 @@
             background: #f4f9ff;
             display: flex;
         }
-        h1 {
-            margin: 0;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #0053a0;
-        }
 
-        /* 사이드바 */
         .sidebar {
             width: 160px;
             background-color: #0053a0;
@@ -53,22 +46,22 @@
             background-color: #eeeeee;
         }
 
-        /* 우측 메인 */
         .main {
             flex: 1;
             padding: 20px 30px;
         }
 
-        .top-bar {display: flex;               /* ✅ 추가 */
+        .top-bar {
+            display: flex;
             justify-content: space-between;
-            align-items: flex-start;     /* 텍스트를 위로 정렬 */
+            align-items: flex-start;
             margin-bottom: 10px;
         }
 
         .user-info {
             position: absolute;
-            top:20px;
-            right:20px;
+            top: 20px;
+            right: 20px;
             background: white;
             padding: 10px 14px;
             border-radius: 10px;
@@ -110,16 +103,14 @@
             color: #0053a0;
         }
 
-        /* 입고 테이블 */
         .table-container {
             background: white;
             margin-top: 40px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             overflow: hidden;
-            /* ✅ 추가된 부분 */
-            max-height: 320px;     /* 테이블 최대 높이 지정 */
-            overflow-y: auto;      /* 스크롤 활성화 */
+            max-height: 320px;
+            overflow-y: auto;
         }
 
         table {
@@ -157,24 +148,46 @@
             background: #ffe9e6;
             color: #c62828;
         }
+
+        .intro-box {
+            margin-top: 40px;
+            background: white;
+            border-radius: 12px;
+            padding: 24px 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            line-height: 1.6;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .intro-box h2 {
+            color: #0053a0;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
     </style>
 </head>
 <body>
 
-<!-- 좌측 사이드바 -->
+<!-- 좌측 사이드바 (관리자 메뉴) -->
 <div class="sidebar">
-    <h2>👤 회원 메뉴</h2>
-    <a href="/todo/inbound" class="menu-btn">입고 목록</a>
-    <a href="/todo/outbound" class="menu-btn">출고 목록</a>
-    <a href="/todo/inventory" class="menu-btn">재고 목록</a>
-    <a href="/todo/inbound/requestForm" class="menu-btn">입고 요청</a>
-    <a href="/todo/outbound/requestForm" class="menu-btn">출고 요청</a>
+    <h2>👨‍💼 관리자 메뉴</h2>
+    <a href="/todo/inbound/approveForm" class="menu-btn">입고 승인</a>
+    <a href="/todo/inbound/admin" class="menu-btn">입고 목록 조회</a>
+    <a href="/todo/outbound/approveForm" class="menu-btn">출고 승인</a>
+    <a href="/todo/outbound/admin" class="menu-btn">출고 목록 조회</a>
+    <a href="/todo/inventory/admin" class="menu-btn">재고 목록</a>
 </div>
 
 <!-- 메인 콘텐츠 -->
 <div class="main">
     <div class="top-bar">
-        <h1>📦 회원 입고 메뉴</h1>
+        <div>
+            <h1>👨‍💼 관리자 입고 메뉴</h1>
+            <p style="font-size: 0.9rem; color: #0053a0; margin-top: 6px;">
+                E-ventory 관리자 페이지에 오신 것을 환영합니다!
+            </p>
+        </div>
         <div class="user-info">
             <div><strong><c:out value="${sessionScope.name}" /></strong>님 환영합니다</div>
             <div>📧 <c:out value="${sessionScope.email}" /></div>
@@ -190,58 +203,22 @@
         </div>
     </div>
 
-    <!-- 카드 -->
-    <div class="dashboard">
-        <div class="card">
-            <div class="card-title">총 입고 요청</div>
-            <div class="card-value">${fn:length(dtoList1)}건</div>
-        </div>
-        <div class="card">
-            <div class="card-title">승인된 입고</div>
-            <div class="card-value">
-                <c:set var="approvedCount" value="0"/>
-                <c:forEach items="${dtoList1}" var="dto">
-                    <c:if test="${dto.status eq '승인'}">
-                        <c:set var="approvedCount" value="${approvedCount + 1}"/>
-                    </c:if>
-                </c:forEach>
-                ${approvedCount}건
-            </div>
-        </div>
-    </div>
-
-    <!-- 테이블 -->
-    <div class="table-container">
-        <table>
-            <thead>
-            <tr>
-                <th>입고 ID</th>
-                <th>상품 ID</th>
-                <th>수량</th>
-                <th>요청일</th>
-                <th>창고</th>
-                <th>회원</th>
-                <th>상태</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${dtoList1}" var="dto">
-                <tr>
-                    <td><c:out value="${dto.inbound_id}"/></td>
-                    <td><c:out value="${dto.product_id}"/></td>
-                    <td><c:out value="${dto.inbound_quantity}"/></td>
-                    <td><c:out value="${dto.req_inbound_day}"/></td>
-                    <td><c:out value="${dto.warehouse_id}"/></td>
-                    <td><c:out value="${dto.userid}"/></td>
-                    <td>
-                        <span class="badge ${dto.status eq '승인' ? 'approved' : 'pending'}">
-                            <c:out value="${dto.status}"/>
-                        </span>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+    <!-- 회사 소개 섹션 -->
+    <div class="intro-box">
+        <h2>회사 소개</h2>
+        <p>
+            E-ventory는 중소기업을 위한 <strong>스마트 창고관리 시스템(WMS)</strong>을 제공합니다.<br>
+            재고 현황을 실시간으로 파악하고, 입고·출고 이력을 체계적으로 관리할 수 있도록 설계된 이 플랫폼은<br>
+            업무 효율성 향상과 물류 비용 절감을 동시에 실현합니다.
+        </p>
+        <p>
+            사용자 친화적인 인터페이스와 권한 기반 관리 시스템을 통해<br>
+            관리자와 일반 사용자 모두가 직관적으로 시스템을 활용할 수 있습니다.
+        </p>
+        <p>
+            E-ventory는 앞으로도 다양한 산업군에 맞춘 <strong>맞춤형 WMS 솔루션</strong>을 통해<br>
+            고객사의 디지털 전환을 지원하겠습니다.
+        </p>
     </div>
 </div>
 

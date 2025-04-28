@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Log4j2
 @RequiredArgsConstructor
 public class InventoryService {
-    private final InventoryMapper inventroyMapper;
+    //private final InventoryMapper inventroyMapper;
     private final ModelMapper modelMapper;
 
     private final InventoryMapper inventoryMapper; // ✅ 오타 수정

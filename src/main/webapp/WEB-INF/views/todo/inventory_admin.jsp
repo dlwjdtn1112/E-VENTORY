@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <title>WMS 대시보드</title>
+    <title>WMS 재고 대시보드</title>
     <style>
         body {
             margin: 0;
@@ -12,6 +12,7 @@
             background: #f4f9ff;
             display: flex;
         }
+
         h1 {
             margin: 0;
             font-size: 1.2rem;
@@ -19,7 +20,6 @@
             color: #0053a0;
         }
 
-        /* 사이드바 */
         .sidebar {
             width: 160px;
             background-color: #0053a0;
@@ -53,26 +53,28 @@
             background-color: #eeeeee;
         }
 
-        /* 우측 메인 */
         .main {
             flex: 1;
             padding: 20px 30px;
+            max-width: calc(100vw - 160px);
+            overflow-x: auto;
         }
 
-        .top-bar {display: flex;               /* ✅ 추가 */
+        .top-bar {
+            display: flex;
             justify-content: space-between;
-            align-items: flex-start;     /* 텍스트를 위로 정렬 */
+            align-items: flex-start;
             margin-bottom: 10px;
         }
 
         .user-info {
             position: absolute;
-            top:20px;
-            right:20px;
+            top: 20px;
+            right: 20px;
             background: white;
             padding: 10px 14px;
             border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             font-size: 8px;
             line-height: 1.6;
             min-width: 170px;
@@ -94,8 +96,8 @@
             background: white;
             border-radius: 15px;
             padding: 24px 20px;
-            width: 100px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            width: 160px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         }
 
         .card-title {
@@ -110,16 +112,13 @@
             color: #0053a0;
         }
 
-        /* 입고 테이블 */
         .table-container {
             background: white;
-            margin-top: 40px;
+            margin-top: 30px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            overflow: hidden;
-            /* ✅ 추가된 부분 */
-            max-height: 320px;     /* 테이블 최대 높이 지정 */
-            overflow-y: auto;      /* 스크롤 활성화 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            max-height: 320px;
+            overflow-y: auto;
         }
 
         table {
@@ -141,40 +140,24 @@
         tr:nth-child(even) {
             background-color: #f2f6fb;
         }
-
-        .badge {
-            padding: 6px 12px;
-            border-radius: 9999px;
-            font-size: 10px;
-        }
-
-        .approved {
-            background: #e0f2ff;
-            color: #0053a0;
-        }
-
-        .pending {
-            background: #ffe9e6;
-            color: #c62828;
-        }
     </style>
 </head>
 <body>
 
 <!-- 좌측 사이드바 -->
 <div class="sidebar">
-    <h2>👤 회원 메뉴</h2>
-    <a href="/todo/inbound" class="menu-btn">입고 목록</a>
-    <a href="/todo/outbound" class="menu-btn">출고 목록</a>
-    <a href="/todo/inventory" class="menu-btn">재고 목록</a>
-    <a href="/todo/inbound/requestForm" class="menu-btn">입고 요청</a>
-    <a href="/todo/outbound/requestForm" class="menu-btn">출고 요청</a>
+    <h2>👨‍💼 관리자 메뉴</h2>
+    <a href="/todo/inbound/approveForm" class="menu-btn">입고 승인</a>
+    <a href="/todo/inbound/admin" class="menu-btn">입고 목록 조회</a>
+    <a href="/todo/outbound/approveForm" class="menu-btn">출고 승인</a>
+    <a href="/todo/outbound/admin" class="menu-btn">출고 목록 조회</a>
+    <a href="/todo/inventory/admin" class="menu-btn">재고 목록</a>
 </div>
 
 <!-- 메인 콘텐츠 -->
 <div class="main">
     <div class="top-bar">
-        <h1>📦 회원 입고 메뉴</h1>
+        <h1>🏢 관리자 재고 메뉴</h1>
         <div class="user-info">
             <div><strong><c:out value="${sessionScope.name}" /></strong>님 환영합니다</div>
             <div>📧 <c:out value="${sessionScope.email}" /></div>
@@ -193,20 +176,8 @@
     <!-- 카드 -->
     <div class="dashboard">
         <div class="card">
-            <div class="card-title">총 입고 요청</div>
-            <div class="card-value">${fn:length(dtoList1)}건</div>
-        </div>
-        <div class="card">
-            <div class="card-title">승인된 입고</div>
-            <div class="card-value">
-                <c:set var="approvedCount" value="0"/>
-                <c:forEach items="${dtoList1}" var="dto">
-                    <c:if test="${dto.status eq '승인'}">
-                        <c:set var="approvedCount" value="${approvedCount + 1}"/>
-                    </c:if>
-                </c:forEach>
-                ${approvedCount}건
-            </div>
+            <div class="card-title">총 재고 항목</div>
+            <div class="card-value">${fn:length(dtoList3)}건</div>
         </div>
     </div>
 
@@ -215,29 +186,21 @@
         <table>
             <thead>
             <tr>
-                <th>입고 ID</th>
+                <th>창고 ID</th>
                 <th>상품 ID</th>
-                <th>수량</th>
-                <th>요청일</th>
-                <th>창고</th>
+                <th>재고 수량</th>
                 <th>회원</th>
-                <th>상태</th>
+                <th>최종 수정일</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${dtoList1}" var="dto">
+            <c:forEach items="${dtoList3}" var="dto">
                 <tr>
-                    <td><c:out value="${dto.inbound_id}"/></td>
-                    <td><c:out value="${dto.product_id}"/></td>
-                    <td><c:out value="${dto.inbound_quantity}"/></td>
-                    <td><c:out value="${dto.req_inbound_day}"/></td>
-                    <td><c:out value="${dto.warehouse_id}"/></td>
-                    <td><c:out value="${dto.userid}"/></td>
-                    <td>
-                        <span class="badge ${dto.status eq '승인' ? 'approved' : 'pending'}">
-                            <c:out value="${dto.status}"/>
-                        </span>
-                    </td>
+                    <td><c:out value="${dto.warehouse_id}" /></td>
+                    <td><c:out value="${dto.product_id}" /></td>
+                    <td><c:out value="${dto.quantity}" /></td>
+                    <td><c:out value="${dto.userid}" /></td>
+                    <td><c:out value="${dto.updated_at}" /></td>
                 </tr>
             </c:forEach>
             </tbody>

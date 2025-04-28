@@ -1,7 +1,9 @@
 package com.ssg.my_wms2.Domain;
 
-import java.time.LocalDate;
+import lombok.Data;
 
+import java.time.LocalDate;
+@Data
 public class OutboundVO {
 
     private int outbound_id;

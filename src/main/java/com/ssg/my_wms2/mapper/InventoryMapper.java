@@ -18,7 +18,12 @@ public interface InventoryMapper {
 
 //    int inventory_checkExist_M(String warehouse_id, String product_id);
 
-    int inventory_checkExist_M(
+    Integer inventory_checkExist_M(
+            @Param("warehouse_id") String warehouseId,
+            @Param("product_id") String productId
+    );
+
+    Integer inventory_quantityCheck_M(
             @Param("warehouse_id") String warehouseId,
             @Param("product_id") String productId
     );
@@ -38,6 +43,12 @@ public interface InventoryMapper {
 
     // 수량 증가 (재고 있을 때)
     void inventory_addQuantity_M(
+            @Param("warehouse_id") String warehouseId,
+            @Param("product_id") String productId,
+            @Param("quantity") int quantity
+    );
+
+    void inventory_subtractQuantity_M(
             @Param("warehouse_id") String warehouseId,
             @Param("product_id") String productId,
             @Param("quantity") int quantity

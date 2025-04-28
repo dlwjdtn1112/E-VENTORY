@@ -31,7 +31,7 @@ public class InventoryController {
         List<InventoryDTO> dtoList = inventoryService.inventory_selectAll_S(); //리스트로 해야 한다.
         log.info(dtoList.toString());
         model.addAttribute("dtoList3", dtoList);
-        return "/todo/inventory";
+        return "/todo/inventory_admin";
     }
 
 

@@ -5,9 +5,12 @@
 
 <mapper namespace="com.ssg.my_wms2.mapper.InventoryMapper">
 
+
+
     <select id="inventory_selectAll_M" resultType="com.ssg.my_wms2.Domain.InventoryVO">
-        SELECT * FROM inventory where = #{userid}
+        SELECT * FROM inventory
     </select>
+
 
 <!--    <select id="inventory_checkExist_M" resultType="int" parameterType="map">-->
 <!--        SELECT COUNT(*) FROM inventory-->
@@ -15,10 +18,14 @@
 <!--        AND product_id = #{product_id}-->
 <!--    </select>-->
 
-    <select id="inventory_checkExist_M" resultType="int">
+    <select id="inventory_checkExist_M" resultType="Integer">
         SELECT COUNT(*) FROM inventory
         WHERE warehouse_id = #{warehouse_id}
         AND product_id = #{product_id}
+    </select>
+
+    <select id = "inventory_quantityCheck_M" resultType="Integer">
+        SELECT quantity from inventory where warehouse_id = #{warehouse_id}  and product_id = #{product_id}
     </select>
 
     <insert id="inventory_insert_M">
@@ -29,6 +36,13 @@
     <update id="inventory_addQuantity_M">
         UPDATE inventory
         SET quantity = quantity + #{quantity}
+        WHERE warehouse_id = #{warehouse_id}
+        AND product_id = #{product_id}
+    </update>
+
+    <update id="inventory_subtractQuantity_M">
+        UPDATE inventory
+        SET quantity = quantity - #{quantity}
         WHERE warehouse_id = #{warehouse_id}
         AND product_id = #{product_id}
     </update>

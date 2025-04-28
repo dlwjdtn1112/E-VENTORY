@@ -7,4 +7,6 @@ public interface UserMapper {
 
     UserDTO login_M(UserDTO dto);
 
+    UserDTO findByUserid(String userid);
+
 }

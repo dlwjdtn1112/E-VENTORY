@@ -3,7 +3,9 @@ package com.ssg.my_wms2.mapper;
 
 
 import com.ssg.my_wms2.Domain.InboundVO;
+import com.ssg.my_wms2.dto.InboundDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 @Mapper
@@ -53,6 +55,12 @@ public interface InboundMapper {
     InboundVO inbound_selectById_M(int inbound_id);  // 입고ID로 단일 조회 (승인 시 필요)
 
     List<InboundVO> inbound_selectByUser_M(String userid);
+
+    List<InboundDTO> inbound_SearchByWarehouse(String warehouseName);
+
+    List<InboundDTO> inbound_SearchByDate(@Param("startDate") String startDate, @Param("endDate") String endDate);
+
+
 
 
 

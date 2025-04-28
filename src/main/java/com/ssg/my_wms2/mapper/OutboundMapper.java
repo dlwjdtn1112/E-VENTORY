@@ -2,6 +2,9 @@ package com.ssg.my_wms2.mapper;
 
 import com.ssg.my_wms2.Domain.InboundVO;
 import com.ssg.my_wms2.Domain.OutboundVO;
+import com.ssg.my_wms2.dto.InboundDTO;
+import com.ssg.my_wms2.dto.OutboundDTO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -9,7 +12,7 @@ public interface OutboundMapper {
 
     List<OutboundVO> outbound_selectAll_M();//출고 전체 조회
 
-    void outbound_requset_M();//출고 요청
+    void outbound_request_M(OutboundVO vo);//출고 요청
 
     void outbound_approve_M();//총 관리자가 출고 요청 승인
 
@@ -24,4 +27,13 @@ public interface OutboundMapper {
     List<InboundVO> outbound_SearchByDayToDay_M(String keyword1, String keyword2);
 
     List<OutboundVO> outbound_selectByUser_M(String userid);
+
+    void outbound_approveStatus_M(int outbound_id);
+
+    OutboundVO outbound_selectById_M(int outbound_id);
+    List<OutboundDTO> outbound_SearchByWarehouse(String warehouseName);
+
+    List<OutboundDTO> outbound_SearchByDate(@Param("startDate") String startDate, @Param("endDate") String endDate);
+
+
 }

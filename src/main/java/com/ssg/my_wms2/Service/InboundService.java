@@ -51,17 +51,27 @@ public class InboundService {
         log.info("✅ 입고 요청 등록 완료: {}", vo);
     }
     public void inbound_approve_S(int inbound_id) {// 총관리자가 입고 승인
-        // 1. 입고 상태를 "승인"으로 업데이트
-        inboundMapper.inbound_approveStatus_M(inbound_id);
+
+
+
 
 
 // 2. 입고 정보 조회
-        InboundVO vo = inboundMapper.inbound_selectById_M(inbound_id); // 메서드명 수정됨
+        InboundVO vo = inboundMapper.inbound_selectById_M(inbound_id);
+
+        if (vo == null) {
+            throw new IllegalArgumentException("해당 입고 아이디 데이터가 존재X");
+        }
 
         String warehouseId = vo.getWarehouse_id();
         String productId = vo.getProduct_id();
         int quantity = vo.getInbound_quantity();
         String userid = vo.getUserid();
+        String status = vo.getStatus();
+
+
+        // 1. 입고 상태를 "승인"으로 업데이트
+        inboundMapper.inbound_approveStatus_M(inbound_id);
 
 // 3. 재고 존재 여부 확인
         int exists = inventoryMapper.inventory_checkExist_M(warehouseId, productId);
@@ -81,6 +91,17 @@ public class InboundService {
                 .stream().map(vo -> modelMapper.map(vo, InboundDTO.class))
                 .collect(Collectors.toList());
     }
+
+    // InboundServiceImpl.java (구현체)
+
+    public List<InboundDTO> inbound_SearchByWarehouse_S(String warehouseName) {
+        return inboundMapper.inbound_SearchByWarehouse(warehouseName);
+    }
+
+    public List<InboundDTO> inbound_SearchByDate_S(String startDate, String endDate) {
+        return inboundMapper.inbound_SearchByDate(startDate, endDate);
+    }
+
 
 
 }

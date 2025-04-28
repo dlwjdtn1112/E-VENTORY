@@ -31,7 +31,29 @@
     <select id="outbound_selectByUser_M" parameterType="string" resultType="com.ssg.my_wms2.Domain.OutboundVO">
         SELECT * FROM outbound
         WHERE userid = #{userid}
-        ORDER BY req_outbound_day DESC
+        ORDER BY outbound_id DESC
+    </select>
+
+    <update id="outbound_approveStatus_M" parameterType="int">
+        UPDATE outbound
+        SET status = '승인'
+        WHERE outbound_id = #{outbound_id}
+
+    </update>
+
+    <select id="outbound_selectById_M" resultType="com.ssg.my_wms2.Domain.OutboundVO" parameterType="int">
+        SELECT * FROM outbound
+        WHERE outbound_id = #{outbound_id}
+    </select>
+
+    <select id="outbound_SearchByWarehouse" resultType="com.ssg.my_wms2.dto.OutboundDTO">
+        SELECT * FROM outbound
+        WHERE warehouse_id = #{warehouseName}
+    </select>
+
+    <select id="outbound_SearchByDate" resultType="com.ssg.my_wms2.dto.OutboundDTO">
+        SELECT * FROM outbound
+        WHERE req_outbound_day BETWEEN #{startDate} AND #{endDate}
     </select>
 
 

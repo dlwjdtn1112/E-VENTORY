@@ -110,7 +110,7 @@
             color: #0053a0;
         }
 
-        /* 입고 테이블 */
+        /* 출고 테이블 */
         .table-container {
             background: white;
             margin-top: 40px;
@@ -163,18 +163,18 @@
 
 <!-- 좌측 사이드바 -->
 <div class="sidebar">
-    <h2>👤 회원 메뉴</h2>
-    <a href="/todo/inbound" class="menu-btn">입고 목록</a>
-    <a href="/todo/outbound" class="menu-btn">출고 목록</a>
-    <a href="/todo/inventory" class="menu-btn">재고 목록</a>
-    <a href="/todo/inbound/requestForm" class="menu-btn">입고 요청</a>
-    <a href="/todo/outbound/requestForm" class="menu-btn">출고 요청</a>
+    <h2>👨‍💼 관리자 메뉴</h2>
+    <a href="/todo/inbound/approveForm" class="menu-btn">입고 승인</a>
+    <a href="/todo/inbound/admin" class="menu-btn">입고 목록 조회</a>
+    <a href="/todo/outbound/approveForm" class="menu-btn">출고 승인</a>
+    <a href="/todo/outbound/admin" class="menu-btn">출고 목록 조회</a>
+    <a href="/todo/inventory/admin" class="menu-btn">재고 목록</a>
 </div>
 
 <!-- 메인 콘텐츠 -->
 <div class="main">
     <div class="top-bar">
-        <h1>📦 회원 입고 메뉴</h1>
+        <h1>🚚 관리자 출고 메뉴</h1>
         <div class="user-info">
             <div><strong><c:out value="${sessionScope.name}" /></strong>님 환영합니다</div>
             <div>📧 <c:out value="${sessionScope.email}" /></div>
@@ -193,14 +193,14 @@
     <!-- 카드 -->
     <div class="dashboard">
         <div class="card">
-            <div class="card-title">총 입고 요청</div>
-            <div class="card-value">${fn:length(dtoList1)}건</div>
+            <div class="card-title">총 출고 요청</div>
+            <div class="card-value">${fn:length(dtoList2)}건</div>
         </div>
         <div class="card">
-            <div class="card-title">승인된 입고</div>
+            <div class="card-title">승인된 출고</div>
             <div class="card-value">
                 <c:set var="approvedCount" value="0"/>
-                <c:forEach items="${dtoList1}" var="dto">
+                <c:forEach items="${dtoList2}" var="dto">
                     <c:if test="${dto.status eq '승인'}">
                         <c:set var="approvedCount" value="${approvedCount + 1}"/>
                     </c:if>
@@ -208,14 +208,42 @@
                 ${approvedCount}건
             </div>
         </div>
+
+
     </div>
+
+    <form action="/todo/outbound/admin/searchWarehouse" method="get" style="display: flex; gap: 8px;">
+        <select name="warehouseName" style="padding: 6px 8px; font-size: 12px; border-radius: 6px; border: 1px solid #ccc;">
+            <option value="">창고 선택</option>
+            <option value="Hanam0329">하남창고</option>
+            <option value="Busan0629">부산창고</option>
+            <option value="Daegu0722">대구창고</option>
+            <option value="Gangwon0712">강원창고</option>
+            <option value="Chungcheong1220">충청창고</option>
+           
+        </select>
+        <button type="submit" style="background-color: #0053a0; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">
+            검색
+        </button>
+    </form>
+
+
+    <form action="/todo/outbound/admin/searchDate" method="get" style="display: flex; gap: 8px;">
+        <input type="date" name="startDate" required style="padding: 6px 8px; font-size: 12px; border-radius: 6px; border: 1px solid #ccc;">
+        <input type="date" name="endDate" required style="padding: 6px 8px; font-size: 12px; border-radius: 6px; border: 1px solid #ccc;">
+        <button type="submit" style="background-color: #0053a0; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">
+            기간 조회
+        </button>
+    </form>
+
+
 
     <!-- 테이블 -->
     <div class="table-container">
         <table>
             <thead>
             <tr>
-                <th>입고 ID</th>
+                <th>출고 ID</th>
                 <th>상품 ID</th>
                 <th>수량</th>
                 <th>요청일</th>
@@ -225,12 +253,12 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${dtoList1}" var="dto">
+            <c:forEach items="${dtoList2}" var="dto">
                 <tr>
-                    <td><c:out value="${dto.inbound_id}"/></td>
+                    <td><c:out value="${dto.outbound_id}"/></td>
                     <td><c:out value="${dto.product_id}"/></td>
-                    <td><c:out value="${dto.inbound_quantity}"/></td>
-                    <td><c:out value="${dto.req_inbound_day}"/></td>
+                    <td><c:out value="${dto.outbound_quantity}"/></td>
+                    <td><c:out value="${dto.req_outbound_day}"/></td>
                     <td><c:out value="${dto.warehouse_id}"/></td>
                     <td><c:out value="${dto.userid}"/></td>
                     <td>

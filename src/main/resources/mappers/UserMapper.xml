@@ -17,6 +17,10 @@
         WHERE userid = #{userid} AND password = #{password}
     </select>
 
+    <select id="findByUserid" parameterType="string" resultType="com.ssg.my_wms2.dto.UserDTO">
+        SELECT * FROM user WHERE userid = #{userid}
+    </select>
+
 </mapper>
 
 

@@ -66,8 +66,19 @@
     <select id="inbound_selectByUser_M" parameterType="string" resultType="com.ssg.my_wms2.Domain.InboundVO">
         SELECT * FROM inbound
         WHERE userid = #{userid}
-        ORDER BY req_inbound_day DESC
+        ORDER BY inbound_id DESC
     </select>
+
+    <select id="inbound_SearchByWarehouse" resultType="com.ssg.my_wms2.dto.InboundDTO">
+        SELECT * FROM inbound
+        WHERE warehouse_id =#{warehouseName}
+    </select>
+
+    <select id="inbound_SearchByDate" resultType="com.ssg.my_wms2.dto.InboundDTO">
+        SELECT * FROM inbound
+        WHERE req_inbound_day BETWEEN #{startDate} AND #{endDate}
+    </select>
+
 
 
 
