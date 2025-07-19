@@ -21,26 +21,29 @@
 | 🔔 알림 기능 | 입고 초과, 재고 부족, 출고 요청 등 이벤트 발생 시 관리자에게 알림 제공 |
 
 
-🧰 Tech Stack
-💻 Languages
+### 🛠️ Tech Stack
+
+**Languages**  
+![Java](https://img.shields.io/badge/Java-007396?style=flat&logo=java&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 
 
+**Back-end**  
+![Spring](https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=spring&logoColor=white)
+![MyBatis](https://img.shields.io/badge/MyBatis-000000?style=flat)
+![OAuth2](https://img.shields.io/badge/OAuth2-0072C6?style=flat)
+
+**Front-end**  
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+
+**Database**  
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat)
 
 
-🛠️ Back-end
+**Tools**  
+![IntelliJ](https://img.shields.io/badge/IntelliJIDEA-000000?style=flat)
 
-
-
-
-
-🌐 Front-end
-
-
-
-
-🗄 Database
-
-🧪 Tools
 
 
 
