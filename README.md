@@ -47,7 +47,7 @@
 
 
 ## 📊 ERD 설계도
-[ERD 보기](https://www.erdcloud.com/d/Dzq4EZA58xqJHGKpM)
+[ERD 보기](https://www.erdcloud.com/d/Dzq4EZA58xqJHGKpM) -2025년 8월 12일 완성예정 
 
 
 
