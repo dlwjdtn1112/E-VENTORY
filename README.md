@@ -46,6 +46,11 @@
 ![IntelliJ](https://img.shields.io/badge/IntelliJIDEA-000000?style=flat)
 
 
+## 📊 ERD 설계도
+[ERD 보기](https://www.erdcloud.com/d/DzㄴㅇㄹㅇㄴㄹㅇHGKpM)
+
+
+
 
 
 
