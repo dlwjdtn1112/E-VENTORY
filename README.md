@@ -47,7 +47,7 @@
 
 
 ## 📊 ERD 설계도
-[ERD 보기](https://www.erdcloud.com/d/DzㄴㅇㄹㅇㄴㄹㅇHGKpM)
+[ERD 보기](https://www.erdcloud.com/d/Dzq4EZA58xqJHGKpM)
 
 
 
