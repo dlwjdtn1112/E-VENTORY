@@ -46,13 +46,17 @@
 ![IntelliJ](https://img.shields.io/badge/IntelliJIDEA-000000?style=flat)
 
 
+
+
 ## 📊 ERD 설계도
-[ERD 보기](https://www.erdcloud.com/d/Dzq4EZA58xqJHGKpM) -2025년 8월 12일 완성예정 
+[ERD 보기](https://www.erdcloud.com/d/Dzq4EZA58xqJHGKpM)  
+※ 최종 완성 예정일: **2025년 8월 12일**
 
+---
 
-♻️ 시스템 리팩토링 안내
-현재 E-VENTORY 시스템은 성능 개선 및 코드 구조 최적화를 위한 리팩토링 작업 중입니다.
-📅 완료 예정일: 2025년 8월 20일
+## ♻️ 리팩토링 진행 중
+본 프로젝트는 성능 개선과 구조 최적화를 위해 리팩토링을 진행하고 있습니다.  
+🛠️ **리팩토링 완료 예정일: 2025년 8월 20일**
 
 
 
